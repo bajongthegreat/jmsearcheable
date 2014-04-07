@@ -12,7 +12,9 @@
     <title>Jumbotron Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" type="text/css">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
@@ -23,7 +25,16 @@
     }
 
     #searchResultContainer {
-      background: rgb(0,0,255);
+      background: #C0C0C0;
+    }
+
+    .searchItem {
+      color: #FFFFFF;
+    }
+
+    .searchItem a {
+      color: #FFFFFF;
+      text-decoration: none;
     }
     </style>
 
@@ -48,7 +59,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">jmSearcheable</a>
         </div>
       
       </div>
@@ -60,48 +71,21 @@
     
 
     <div class="container main">
-      <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <h2>Demo</h2>
+          <p> The project uses a php file to hold a dummy JSON object to have something to retreive in our AJAX request.</p>
       </div>
-
+       
+       <div class="container">
+         <input class="form-control" id="search">   
       <div id="searchResultContainer"></div>
+       </div>
 
 
-      <table id="jmTable" class="table table-striped">
-      <thead>
-          <th>ID</th>
-          <th>Name</th>
-      </thead>
+       <div class="container" style="margin-top: 30px;">
 
-      <tbody>
-        <tr>
-            <td>1000</td>
-            <td>John Doe</td>
-        </tr>
-      </tbody>
+      <code>
 
-    </table>
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-
-
-    <script src="plugin/jmsearcheable.js"></script>
-     <script src="plugin/jmtable.js"></script>
-    <script>
-      $('#email').jmSearcheable({
+         $('#search').jmSearcheable({ 
           url: 'search.php',
           urlWithID: true,
           idField: 'employee_work_id',
@@ -109,7 +93,42 @@
           format: 'employee_work_id: - :lastname'
       });
 
-      $('#jmTable').jmTable();
+      </code>
+
+     
+       </div>
+
+      
+
+
+
+
+      <hr>
+
+      <footer>
+        <p> jmSearcheable &copy; 2014 <span> <i>James Norman Mones Jr.</i></span></p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js" type="text/javascript"></script>
+
+    <script src="js/jmsearcheable.js"></script>
+    <script>
+      $('#search').jmSearcheable({
+          url: 'search.php',
+          urlWithID: true,
+          idField: 'employee_work_id',
+          fadeOut: 'slow',
+          format: 'employee_work_id: - :lastname'
+      });
+
     </script>
   </body>
 </html>
