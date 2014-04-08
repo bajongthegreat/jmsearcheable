@@ -123,11 +123,13 @@
     <script>
       $('#search').jmSearcheable({
           url: 'search.php',
-          urlWithID: true,
+          urlWithID: false,
           idField: 'employee_work_id',
           fadeOut: 'slow',
           format: 'employee_work_id: - :lastname'
       });
+
+      
 
     </script>
   </body>

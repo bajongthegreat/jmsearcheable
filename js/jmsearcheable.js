@@ -14,6 +14,7 @@
 	// Format: [ [ 'key' => 'value' ] , [ 'key' => 'value']    ]
 
 
+
 	$.fn.jmSearcheable = function(options) {
 
 		var self = $(this);
@@ -36,6 +37,23 @@
           fields: [''],
           fieldTag: 'div'
 		}, options);
+
+
+		// A click event handler for every searchItem
+		$( document ).on( 'click', '.searchItem', function () {
+		   if (settings.urlWithID == false) {
+		  		
+		  		// Set the value to the container and focus
+		   		self.val( $(this).find('.' + settings.idField).html().replace(/ /g,'')   ).focus();
+
+		   		// Hide the result container
+		   		$(settings.containerWrapper).fadeOut(settings.fadeOut);
+
+
+
+		   }
+		});
+
 
 
 		
@@ -61,6 +79,7 @@
 
 						displayContent(data);
 
+
 					}, settings.delay);
 
 					
@@ -70,12 +89,13 @@
 		};
 
 		// Toggles a specified container wrapper based on the length of entered value in this form
-		toggleContainer = function () {
+		toggleContainer = function (toggle) {
 
 
-			if (self.val().length > 0) {
+			if (self.val().length > 0 || toggle === false) {
 				$(settings.containerWrapper).fadeIn(settings.fadeIn);
 			} else {
+
 				$(settings.containerWrapper).fadeOut(settings.fadeOut);
 			}
 
@@ -122,6 +142,8 @@
 		// Formats the string based on the specified format
 		doFormat = function (data) {
 
+
+
 			var toType = function(obj) {
 				  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 				}
@@ -129,9 +151,10 @@
 
 			var output = "",
 				openTag= "<" + settings.fieldTag + " class=\"searchItem\">",
-				closeTag= "<" + settings.fieldTag + "/>";
+				closeTag= "</" + settings.fieldTag + ">";
 
-		
+				
+
 
 				var format = settings.format,
 				    colonCount = format.split(':').length-1;
@@ -147,7 +170,7 @@
 				var reg = new RegExp(Object.keys(data).join("|"),"gi");
 				 
 				 format = format.replace(reg, function(matched){
-				  return data[matched];
+				  return ' <span class="' + matched +'"> ' + data[matched] + '</span>';
 
 				});
 
@@ -166,7 +189,9 @@
 
 				 		// The final product with a field tag and an anchor tag
 				 		// <tag><a>Label</a></tag>
+
 				 	 output +=openTag + open_link +  format  + close_link + closeTag;
+
 
 
 				 	
@@ -174,6 +199,8 @@
 
 				 	// No anchor tag
 				 	 output += openTag + format + closeTag;
+
+				 
 				 }
 				
 
@@ -215,15 +242,14 @@
 			
 			// Begin search
 			beginSearch(); 
+
+
 		});
-
-
-
 
 
 
 	};
 
 
-
+	
 })(jQuery);
