@@ -1,29 +1,20 @@
 
 //! jmsearcheable.js
-//! version : 1
+//! version : 1.0.1
 //! author : James Norman Mones Jr.
 
 
-(function( $ ) {
+;(function( $, window, document, undefined ) {
 
 	// Debugging
 	// console.log('Plugin loaded');
 
-
 	// Must be a JSON object
 	// Format: [ [ 'key' => 'value' ] , [ 'key' => 'value']    ]
 
+	var pluginName = 'jmSearcheable';
 
-
-	$.fn.jmSearcheable = function(options) {
-
-		var self = $(this);
-		var result;
-
-		// Debugging
-		// console.log('Plugin initialized.');
-
-		settings = $.extend({
+	defaults = {
 		  url: '#',
           urlWithID: false,
           idSeparator: '?',
@@ -36,10 +27,33 @@
           keyEvent: 'keyup',
           fields: [''],
           fieldTag: 'div'
-		}, options);
+		};
 
 
-		// A click event handler for every searchItem
+	// The actual plugin constructor
+    function Plugin( element, options ) {
+    	
+    	this.element = element;
+
+    	this.options = $.extend( {}, defaults, options) ;
+
+    	this._defaults = defaults;
+
+        this._name = pluginName;
+
+        this.element = $(element);
+        
+        this.init();
+
+    }
+
+    Plugin.prototype.init = function () {
+        
+        var self = this.element,
+            settings = this.options;
+
+
+        // A click event handler for every searchItem
 		$( document ).on( 'click', '.searchItem', function () {
 		   if (settings.urlWithID == false) {
 		  		
@@ -49,19 +63,12 @@
 		   		// Hide the result container
 		   		$(settings.containerWrapper).fadeOut(settings.fadeOut);
 
-
-
 		   }
 		});
 
+			beginSearch = function () {
 
-
-		
-		beginSearch = function () {
-
-			// console.log(settings.fields);
-
-			// console.log('beginSearch function called');
+			
 			$.ajax({
 				url: settings.url,
 				type: 'GET',
@@ -82,8 +89,6 @@
 
 					}, settings.delay);
 
-					
-					
 				}
 			});
 		};
@@ -142,8 +147,6 @@
 		// Formats the string based on the specified format
 		doFormat = function (data) {
 
-
-
 			var toType = function(obj) {
 				  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 				}
@@ -153,13 +156,9 @@
 				openTag= "<" + settings.fieldTag + " class=\"searchItem\">",
 				closeTag= "</" + settings.fieldTag + ">";
 
-				
-
 
 				var format = settings.format,
 				    colonCount = format.split(':').length-1;
-
-
 
 				// Replace all occurences of :
 				for (var i = colonCount; i >= 0; i--) {
@@ -172,11 +171,7 @@
 				 format = format.replace(reg, function(matched){
 				  return ' <span class="' + matched +'"> ' + data[matched] + '</span>';
 
-				});
-
-
-			
-				 
+				});			 
 
 				 // Check if the output would include an id
 				 if (settings.urlWithID === true) {
@@ -191,9 +186,6 @@
 				 		// <tag><a>Label</a></tag>
 
 				 	 output +=openTag + open_link +  format  + close_link + closeTag;
-
-
-
 				 	
 				 } else {
 
@@ -202,11 +194,7 @@
 
 				 
 				 }
-				
-
-			
-				
-			
+						
 
 			return output;
 			
@@ -247,9 +235,20 @@
 		});
 
 
+    };
 
-	};
+     // A really lightweight plugin wrapper around the constructor, 
+    // preventing against multiple instantiations
+    $.fn[pluginName] = function ( options ) {
+        return this.each(function () {
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName, 
+                new Plugin( this, options ));
+            }
+        });
+    }
 
 
-	
-})(jQuery);
+
+
+})(jQuery, window, document);

@@ -1,0 +1,14 @@
+
+    #searchResultContainer {
+      background: #C0C0C0;
+    }
+
+    .searchItem {
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .searchItem a {
+      color: #FFFFFF;
+      text-decoration: none;
+    }

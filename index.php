@@ -17,25 +17,16 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" type="text/css">
 
     <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
+    <link href="css/searcheable.css" rel="stylesheet">
 
     <style type="text/css">
-    .main {
+      .main {
       margin-top: 50px;
-    }
+      }
 
-    #searchResultContainer {
-      background: #C0C0C0;
-    }
-
-    .searchItem {
-      color: #FFFFFF;
-    }
-
-    .searchItem a {
-      color: #FFFFFF;
-      text-decoration: none;
-    }
+      .prettyprint {
+        margin-top: 15px;
+      }
     </style>
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -66,26 +57,31 @@
     </div>
 
 
-
-
-    
-
     <div class="container main">
       <h2>Demo</h2>
           <p> The project uses a php file to hold a dummy JSON object to have something to retreive in our AJAX request.</p>
       </div>
        
-       <div class="container">
+
+     
+
+
+       <div class="container" style="margin-top: 30px;">
+
+
+              <div class="container">
          <input class="form-control" id="search">   
       <div id="searchResultContainer"></div>
        </div>
 
 
-       <div class="container" style="margin-top: 30px;">
+      <div class="page-header"> <h4> Returning a result with Anchor tag </h4> </div>
 
-      <code>
 
-         $('#search').jmSearcheable({ 
+      <pre class="prettyprint">
+
+
+         $('#search_with_anchor').jmSearcheable({ 
           url: 'search.php',
           urlWithID: true,
           idField: 'employee_work_id',
@@ -93,8 +89,30 @@
           format: 'employee_work_id: - :lastname'
       });
 
-      </code>
+    
+        </pre>
+     
 
+
+           <div class="page-header"> <h4> Returning a result without Anchor tag </h4> </div>
+
+
+
+      <pre class="prettyprint">
+
+
+         $('#searchii').jmSearcheable({ 
+          url: 'search.php',
+          urlWithID: false,
+          idField: 'employee_work_id',
+          fadeOut: 'slow',
+          format: 'employee_work_id: - :lastname'
+      });
+
+    
+        </pre>
+
+        
      
        </div>
 
@@ -105,9 +123,11 @@
 
       <hr>
 
-      <footer>
+      <div class="container">
+        <footer>
         <p> jmSearcheable &copy; 2014 <span> <i>James Norman Mones Jr.</i></span></p>
       </footer>
+      </div>
     </div> <!-- /container -->
 
 
@@ -115,12 +135,14 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js" type="text/javascript"></script>
-
+   
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     <script src="js/jmsearcheable.js"></script>
     <script>
+    
       $('#search').jmSearcheable({
           url: 'search.php',
           urlWithID: false,
@@ -129,7 +151,9 @@
           format: 'employee_work_id: - :lastname'
       });
 
-      
+
+  
+
 
     </script>
   </body>
