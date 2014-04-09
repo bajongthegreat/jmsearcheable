@@ -14,7 +14,22 @@
 
 	var pluginName = 'jmSearcheable';
 
-	defaults = {
+	 $.fn.jmSearcheable = function ( options ) {
+
+	 	$.each(this, function(key, element) {
+	 		
+	 		return  Plugin(element, options);
+	 	});
+	 	
+	 }
+
+
+
+
+	// The actual plugin constructor
+    function Plugin( element, options ) {
+
+    	defaults = {
 		  url: '#',
           urlWithID: false,
           idSeparator: '?',
@@ -26,14 +41,13 @@
           fadeOut: 'fast',
           keyEvent: 'keyup',
           fields: [''],
-          fieldTag: 'div'
+          fieldTag: 'div',
+          format: 'employee_work_id: - :lastname'
 		};
-
-
-	// The actual plugin constructor
-    function Plugin( element, options ) {
     	
     	this.element = element;
+
+
 
     	this.options = $.extend( {}, defaults, options) ;
 
@@ -42,15 +56,27 @@
         this._name = pluginName;
 
         this.element = $(element);
+
+
         
-        this.init();
+         init();
+
+        
 
     }
 
-    Plugin.prototype.init = function () {
+    init = function () {
+
+   
+
+
         
         var self = this.element,
             settings = this.options;
+
+
+
+
 
 
         // A click event handler for every searchItem
@@ -66,7 +92,9 @@
 		   }
 		});
 
-			beginSearch = function () {
+		beginSearch = function () {
+
+				
 
 			
 			$.ajax({
@@ -122,8 +150,14 @@
 
 									// Format output text
 									finalText += doFormat(value);
+
+
 									
+								} else {
+									console.log(value);
+									finalText = value;
 								}
+
 								
 							} else {
 								console.log('Not an object');
@@ -239,14 +273,18 @@
 
      // A really lightweight plugin wrapper around the constructor, 
     // preventing against multiple instantiations
-    $.fn[pluginName] = function ( options ) {
-        return this.each(function () {
-            if (!$.data(this, 'plugin_' + pluginName)) {
-                $.data(this, 'plugin_' + pluginName, 
-                new Plugin( this, options ));
-            }
-        });
-    }
+    // $.fn.jmSearcheable = function ( options ) {
+
+  
+
+    //     return this.each(function () {
+
+    //             $.data(this, 'plugin_' + pluginName, 
+    //             new Plugin( this, options ));
+            
+
+    //     });
+    // }
 
 
 

@@ -57,6 +57,8 @@
     </div>
 
 
+    
+
     <div class="container main">
       <h2>Demo</h2>
           <p> The project uses a php file to hold a dummy JSON object to have something to retreive in our AJAX request.</p>
@@ -96,6 +98,11 @@
 
            <div class="page-header"> <h4> Returning a result without Anchor tag </h4> </div>
 
+      <div class="container">
+         <input class="form-control" id="searche">
+
+      <div id="searchResultContainers"></div>
+       </div>
 
 
       <pre class="prettyprint">
@@ -148,7 +155,16 @@
           urlWithID: false,
           idField: 'employee_work_id',
           fadeOut: 'slow',
-          format: 'employee_work_id: - :lastname'
+           containerWrapper: '#searchResultContainer'
+      });
+
+
+       $('#searche').jmSearcheable({
+          url: 'search.php',
+          urlWithID: false,
+          idField: 'employee_work_id',
+          fadeOut: 'slow',
+          containerWrapper: '#searchResultContainers'
       });
 
 
